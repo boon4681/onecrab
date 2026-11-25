@@ -14,6 +14,8 @@
 
     const MIN_LENGTH = 6;
 
+    const description = $derived(`${formatBytes(data.size)} encrypted file. Enter the passcode to download.`);
+
     let passcode = $state('');
     let error = $state('');
     let invalid = $state(false);
@@ -75,6 +77,21 @@
 
 <svelte:head>
     <title>Shared file · onecrab</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="onecrab" />
+    <meta property="og:title" content="Someone shared a file with you" />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="{data.origin}/f/{data.id}" />
+    <meta property="og:image" content="{data.origin}/api/shares/{data.id}/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="onecrab: an encrypted file was shared with you" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Someone shared a file with you" />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="{data.origin}/api/shares/{data.id}/og.png" />
 </svelte:head>
 
 <main class="flex min-h-svh flex-col items-center justify-center gap-8 p-6">

@@ -56,4 +56,6 @@ If the superadmin password is lost, reset it with:
 yarn admin:reset
 ```
 
-This command arrives in a later ticket.
+# LICENSE
+
+MIT

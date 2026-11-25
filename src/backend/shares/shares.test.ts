@@ -133,6 +133,22 @@ describe('upload and download', () => {
     });
 });
 
+describe('og banner', () => {
+    it('renders a 1200x630 png for an available share and 404s otherwise', async () => {
+        const { id } = await createShare({ ownerId, name: 'x', type: 't', bytes: Buffer.from('x'), passcode: 'abc123' });
+        const res = await app.request(`/api/shares/${id}/og.png`);
+        expect(res.status).toBe(200);
+        expect(res.headers.get('content-type')).toBe('image/png');
+        const png = Buffer.from(await res.arrayBuffer());
+        expect(png.subarray(1, 4).toString()).toBe('PNG');
+        expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+
+        expect((await app.request('/api/shares/nope/og.png')).status).toBe(404);
+        getDb().update(shares).set({ expiresAt: new Date(Date.now() - 1) }).where(eq(shares.id, id)).run();
+        expect((await app.request(`/api/shares/${id}/og.png`)).status).toBe(404);
+    });
+});
+
 describe('share lifecycle', () => {
     const makeUser = (email: string) => {
         const u = getDb().insert(users).values({ email, role: 'user' }).returning().get();

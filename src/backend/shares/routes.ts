@@ -16,6 +16,7 @@ import {
     MAX_FILE_BYTES,
     openShare
 } from './service';
+import { renderShareBanner } from './og';
 
 // Multipart framing and the passcode field ride on top of the file bytes.
 const MULTIPART_OVERHEAD = 64 * 1024;
@@ -79,6 +80,15 @@ export const shareRoutes = new Hono<AppEnv>()
         const share = findAvailableShare(c.req.param('id'));
         if (!share) return c.json({ error: 'not_found' }, 404);
         return c.json({ id: share.id, size: share.size, expiresAt: share.expiresAt, ownerId: share.ownerId });
+    })
+    .get('/shares/:id/og.png', async (c) => {
+        const share = findAvailableShare(c.req.param('id'));
+        if (!share) return c.json({ error: 'not_found' }, 404);
+        // Short-lived: the banner shows the download count.
+        return c.body(new Uint8Array(await renderShareBanner(share)), 200, {
+            'content-type': 'image/png',
+            'cache-control': 'public, max-age=300'
+        });
     })
     .post('/shares/:id/download', validate('json', downloadBody), async (c) => {
         const share = findAvailableShare(c.req.param('id'));

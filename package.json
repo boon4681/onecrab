@@ -47,13 +47,18 @@
         "vitest": "^5.1.1"
     },
     "dependencies": {
+        "@fontsource/figtree": "^5.3.0",
+        "@fontsource/jetbrains-mono": "^5.3.0",
         "@hono/zod-validator": "^0.9.1",
         "@paralleldrive/cuid2": "^3.3.0",
+        "@resvg/resvg-js": "^2.6.2",
         "better-sqlite3": "^13.2.0",
         "blobatar": "^2.7.0",
         "hash-wasm": "^4.13.0",
         "hono": "^4.13.21",
         "openid-client": "^6.9.1",
+        "satori": "^0.63.2",
+        "satori-html": "^0.3.2",
         "zod": "^4.6.7"
     }
 }
