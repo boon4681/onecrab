@@ -1,56 +1,59 @@
-# sv
+<img align="left" width="80px" src="./.resources/logo.svg" />
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+<h1>Onecrab<br/><br/></h1>
 
-## Creating a project
+A small, invite-only file sharing app. Members upload files of up to 5 MB, which are encrypted with a passcode before they are stored.
 
-If you're seeing this, you've probably already done this step. Congrats!
+<img src="./.resources/preview-2.png" />
 
-```sh
-# create a new project
-npx sv create my-app
-```
 
-To recreate this project with the same configuration:
+
+
+## Development
 
 ```sh
-# recreate this project
-npx sv@1.7.0 create --template minimal --types ts --add tailwindcss="plugins:none" drizzle="database:d1" --install yarn onecrab
+yarn          # install dependencies
+yarn dev      # start the dev server
+yarn run check  # type-check (bare `yarn check` is yarn's builtin, not this script)
+yarn test     # run the tests
 ```
 
-## Adding features
+## Configuration
 
-Add features to your project with `sv add`:
+| Variable   | Description                                                              | Default  |
+| ---------- | ------------------------------------------------------------------------ | -------- |
+| `ORIGIN`   | Public origin of the app, e.g. `https://files.example.com`. Required in production. | none     |
+| `DATA_DIR` | Directory holding the database and stored files.                         | `./.onecrab` |
+| `BODY_SIZE_LIMIT` | Max request body for adapter-node. Must stay above the 5 MB upload cap. | `6M` in Docker; set it yourself when running `node build` |
+| `ADDRESS_HEADER` | Header carrying the client IP (e.g. `X-Forwarded-For`) when behind a reverse proxy; used by the Guess Limit. Without it every client looks like the proxy. | none |
+| `XFF_DEPTH` | How many trusted proxies append to `X-Forwarded-For`; the client IP is read that far from the right. | `1` |
+
+Copy `.env.example` to `.env` for local use.
+
+## Docker
 
 ```sh
-npx sv add
+docker build -t onecrab .
+docker run -d --name onecrab -p 3000:3000 \
+    -v ./data:/app/data \
+    -e ORIGIN=https://files.example.com \
+    onecrab
 ```
 
-For example, to add Tailwind CSS:
+The image runs as the non-root `node` user and keeps all state in `/app/data` (declared as a volume), so data survives container restarts. Make sure the mounted directory is writable by uid 1000. Backing up means copying that directory. onecrab runs as a single instance only.
+
+## First-time setup
+
+On first boot, the server prints a Setup Link of the form `/setup/<id>/<id>` to its logs. Open it in a browser to create the superadmin account:
 
 ```sh
-npx sv add tailwindcss
+docker logs onecrab
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+If the superadmin password is lost, reset it with:
 
 ```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+yarn admin:reset
 ```
 
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+This command arrives in a later ticket.

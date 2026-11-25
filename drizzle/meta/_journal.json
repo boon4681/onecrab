@@ -1,0 +1,69 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1795532914470,
+      "tag": "0000_smiling_invisible_woman",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1795533163831,
+      "tag": "0001_clumsy_caretaker",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1795533552329,
+      "tag": "0002_perpetual_wind_dancer",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1795533637488,
+      "tag": "0003_white_marrow",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1795535120792,
+      "tag": "0004_perfect_mongoose",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1795535241553,
+      "tag": "0005_faulty_silhouette",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1795535405688,
+      "tag": "0006_true_living_lightning",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1795535411528,
+      "tag": "0007_long_bucky",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1795535993671,
+      "tag": "0008_nappy_xorn",
+      "breakpoints": true
+    }
+  ]
+}

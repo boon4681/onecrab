@@ -1,0 +1,1 @@
+ALTER TABLE `providers` ADD `trust_email` integer DEFAULT false NOT NULL;

@@ -1,0 +1,12 @@
+node_modules
+.svelte-kit
+build
+data
+.onecrab
+.env
+.env.*
+.git
+.scratch
+.claude
+Dockerfile
+.dockerignore
